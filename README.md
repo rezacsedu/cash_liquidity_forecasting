@@ -4,6 +4,8 @@ Suppose there are 100 bank accounts for a group of companies for their 100 busin
 How can we model this situation in the form of a cash or liquidity forecasting problem such that we can forecast how much liquid cash will still be in their individual or central account so that the organization can make intelligent decisions about investing the liquid money in profitable businesses? This is crucial because, otherwise that money will just be sitting idle. 
 
 ## Libraries 
+These libraries are ranked based on their general popularity and suitability for a range of time series forecasting tasks. The best choice for you will depend on your specific requirements, such as the complexity of the time series, the need for classical versus machine learning methods, and the level of customization required.
+
   - statsmodels: Known for its extensive list of algorithms for statistical modelling and time series analysis, statsmodels is a popular choice for those looking for classical statistical methods.
   - scikit-learn: Again, not exclusively for time series, but its wide range of algorithms and tools for machine learning make it a versatile library that can be adapted for time series forecasting.
   - Prophet: Developed by Facebook, Prophet is designed for forecasting time series data. It's especially good for data with strong seasonal effects and several seasons of historical data.
@@ -17,6 +19,19 @@ How can we model this situation in the form of a cash or liquidity forecasting p
   - Sktime: Sktime provides a unified framework for time series machine learning.
 
 ## Standard time series libraries vs. PySpark ones
+When comparing standard Python libraries for time series forecasting with PySpark libraries, the key differences in scalability and computational bottlenecks are:
+
+Standard Python Libraries (e.g., pandas, statsmodels, scikit-learn):
+•  Scalability: These libraries are generally not designed for distributed computing. They work well for datasets that fit into the memory of a single machine. When dealing with very large datasets, you may encounter memory limitations and performance issues.
+
+•  Computational Bottleneck: The computational bottleneck for standard Python libraries typically arises when the dataset size exceeds the memory capacity of the machine, leading to slower performance and potential crashes.
+
+PySpark Libraries:
+•  Scalability: PySpark is designed for distributed computing and can handle very large datasets by distributing the computation across multiple nodes in a cluster. This makes it highly scalable and suitable for big data applications.
+
+•  Computational Bottleneck: The computational bottleneck in PySpark is less likely to be due to dataset size, as it can process data that exceeds the memory of a single machine. However, network I/O, data serialization, and the overhead of managing distributed computations can become bottlenecks, especially if not properly optimized.
+
+In summary, for smaller datasets that can fit into the memory of a single machine, standard Python libraries are often sufficient and can be more straightforward to use. For larger datasets or when distributed computing is required, PySpark shines with its ability to scale and handle complex, large-scale data processing tasksh
 
 ## Data generation
 Following code to generate synthetic data, by including factors such as different types of cash inflows and outflows, seasonality, trends, and perhaps external economic indicators to comply with a real-world scenario. It creates a time series dataset for 1000 accounts over a specified date range with monthly frequency. The dataset includes simulated cash inflows and outflows with seasonal patterns and adjusts for inflation factors.
