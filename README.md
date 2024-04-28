@@ -3,6 +3,21 @@ Suppose there are 100 bank accounts for a group of companies for their 100 busin
 
 How can we model this situation in the form of a cash or liquidity forecasting problem such that we can forecast how much liquid cash will still be in their individual or central account so that the organization can make intelligent decisions about investing the liquid money in profitable businesses? This is crucial because, otherwise that money will just be sitting idle. 
 
+## Libraries 
+  - statsmodels: Known for its extensive list of algorithms for statistical modelling and time series analysis, statsmodels is a popular choice for those looking for classical statistical methods.
+  - scikit-learn: Again, not exclusively for time series, but its wide range of algorithms and tools for machine learning make it a versatile library that can be adapted for time series forecasting.
+  - Prophet: Developed by Facebook, Prophet is designed for forecasting time series data. It's especially good for data with strong seasonal effects and several seasons of historical data.
+  - Darts: Darts is a Python library developed by Unit8 for easy manipulation and forecasting of time series. It provides a variety of models, from classical to deep learning.
+  - Kats: Developed by Facebook, Kats is a toolkit designed specifically for time series analysis. It offers a variety of models and utilities, making it a flexible choice for time series tasks.
+  - GreyKite: A newer library released by LinkedIn, GreyKite offers automation in forecasting tasks using the primary forecasting algorithm ‘Silverkite.’ It's designed to simplify prediction tasks and help interpret outputs.
+  - AutoTS: AutoTS is a library that provides automated time series forecasting. It's designed to be easy to use and to handle a wide range of time series forecasting problems.
+  - ARIMA: While ARIMA is a model rather than a library, it's implemented in several Python packages like statsmodels. It's one of the most traditional and widely used methods for time series forecasting.
+  - PyFlux: PyFlux offers a wide range of time series models, including Bayesian models, ARIMA, and GARCH. It's a good choice for those looking for advanced probabilistic modelling.
+  - Tsfresh: Tsfresh is focused on feature extraction for time series data. It's useful for preparing time series data for machine learning models.
+  - Sktime: Sktime provides a unified framework for time series machine learning.
+
+## Standard time series libraries vs. PySpark ones
+
 ## Data generation
 Following code to generate synthetic data, by including factors such as different types of cash inflows and outflows, seasonality, trends, and perhaps external economic indicators to comply with a real-world scenario. It creates a time series dataset for 1000 accounts over a specified date range with monthly frequency. The dataset includes simulated cash inflows and outflows with seasonal patterns and adjusts for inflation factors.
 
