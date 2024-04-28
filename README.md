@@ -60,11 +60,11 @@ To introduce conformal prediction into your time series forecasting following st
   
   5. **Predict future data points:** Predict future data points for a required forecast horizon using the trained model and calculate the upper and lower bounds of the prediction intervals based on the conformity scores and the significance level. 
 
-
 ### Standalone forecasting using Prophet model from Darts library 
-
-
 ### Distributed cash liquidity forecasting with PySpark
-
-
 ### Conformal prediciton interval for better uncertanity quantification
+
+## Scalability issue: Pandas vs. PySpark 
+Generally, pandas_udf is optimized for grouped operations, such as applying a function after a groupBy. This allows for vectorized operations which are typically faster than regular User-Defined Functions (UDFs). For simple element-wise operations, a regular Spark UDF might suffice and be faster. On the other hand, applyInPandas is used with groupBy operations on a DataFrame and allows for more complex transformations. It can be more efficient for execution with large datasets, despite requiring some additional syntax to learn. The overhead for applyInPandas is generally lower compared to pandas_udf, especially as the data size increases.
+
+It's important to note that both applyInPandas and pandas_udf can lead to an Out-Of-Memory (OOM) risk if the data for a group is too large to fit in memory. Therefore, it's crucial to be aware of the potential memory constraints when working with large datasets. In summary, if we're performing complex transformations on grouped data, applyInPandas might be more efficient, especially for large datasets. For simpler, element-wise operations, pandas_udf could be more suitable. It's always a good practice to test both methods on your specific dataset to determine which one provides better performance.
