@@ -42,7 +42,8 @@ Following code to generate synthetic data, by including factors such as differen
   df['net_cash_flow'] = df['adjusted_cash_inflows'] - df['cash_outflows']
   
   # Reset the index to turn the MultiIndex into columns
-  df.reset_index(inplace=True)```
+  df.reset_index(inplace=True)
+```
 
 ## Methods 
 To introduce conformal prediction into your time series forecasting following steps are needed:
