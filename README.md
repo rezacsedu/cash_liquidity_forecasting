@@ -32,7 +32,9 @@ There are several ways to scale things up as standard Python libraries are not m
 - **Grouped map pandas_udf**: it is designed for more complex operations on grouped data.
 - **applyInPandas**: allows for arbitrary operations on grouped data and allows for more complex transformations. Hence, it can be more efficient for execution with large datasets. Although similar to the grouped map pandas_udf, its efficiency depends on the specific transformation and the context in which it's used.
 
-A sample aggregation operation on 1M rows took 50–55 seconds with Python UDF, whereas pandas_udfs took 40–45 seconds. This is a 25% performance improvement in local mode. Conversely, I noticed the advantage diminishes with smaller data, yet it is a good indicator of the advantage of using **pandas_udfs** compared to Python UDFs in PySpark. Although both **applyInPandas** and grouped map **pandas_udf**, they may lead to **OOM** errors if the data within a group is too large.  
+A sample aggregation operation on 1M rows took 50–55 seconds with Python UDF, whereas pandas_udfs took 40–45 seconds. This is a 25% performance improvement in local mode. Conversely, I noticed the advantage diminishes with smaller data, yet it is a good indicator of the advantage of using **pandas_udfs** compared to Python UDFs in PySpark. 
+
+**Warning**: both **applyInPandas** and grouped map **pandas_udf** may lead to **OOM** errors if the data within a group is too large.  
 
 ## Toy proof-of-concept 
 We did some quick POC based on synthetic data to assess the technical feasibility. The overall workflow of the methods employed can be described as follows: 
