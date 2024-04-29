@@ -19,14 +19,15 @@ The following are some most widely used Python libraries for time series forecas
 
 ## Standard Python libraries vs. PySpark
 <div align="justify">
-When comparing standard Python libraries for time series forecasting with PySpark, the key points of comparison are scalability and computational efficiency, especially with large datasets. 
+When comparing standard Python libraries for time series forecasting with PySpark, the key points of comparison are scalability and computational efficiency, especially with large datasets. </div>
 
-Standard Python libraries such as Darts, Prophet, and Skforecast are more specialised, well-maintained, and based on scientific studies, and hence are widely used for time series forecasting. They have support for model development, diagnostics, validation, and even back-testing functions. However, they are primarily designed for single-machine (e.g., they don't parallelize computations without additional frameworks), hence they work well for datasets that fit into the memory of a single machine. Therefore, they can face significant slowdowns or memory issues when dealing with large datasets, leading to slower performance and potential OOM issues. 
+<div align="justify">
+Standard Python libraries such as Darts, Prophet, and Skforecast are more specialised, well-maintained, and based on scientific studies, and hence are widely used for time series forecasting. They have support for model development, diagnostics, validation, and even back-testing functions. However, they are primarily designed for single-machine (e.g., they don't parallelize computations without additional frameworks), hence they work well for datasets that fit into the memory of a single machine. Therefore, they can face significant slowdowns or memory issues when dealing with large datasets, leading to slower performance and potential OOM issues. </div>
 
-On the other hand, being designed for distributed computing, PySpark can handle large-scale data processing, allowing parallel processing across multiple nodes in a cluster. This significantly improves scalability and computational speed for large datasets. PySpark's MLlib library provides tools for ML and time series forecasting. The main advantage is its ability to scale horizontally by adding more nodes to the Spark cluster and its ability to handle complex, thus overcoming the computational bottlenecks faced by standard Python libraries. PySpark excels in scenarios where data parallelism can be leveraged, such as when you can partition your data and perform operations on each partition in parallel. Even, standard Python libraries can be used by leveraging its pandas_udf functionality. 
+<div align="justify">
+On the other hand, being designed for distributed computing, PySpark can handle large-scale data processing, allowing parallel processing across multiple nodes in a cluster. This significantly improves scalability and computational speed for large datasets. PySpark's MLlib library provides tools for ML and time series forecasting. The main advantage is its ability to scale horizontally by adding more nodes to the Spark cluster and its ability to handle complex, thus overcoming the computational bottlenecks faced by standard Python libraries. PySpark excels in scenarios where data parallelism can be leveraged, such as when you can partition your data and perform operations on each partition in parallel. Even, standard Python libraries can be used by leveraging its pandas_udf functionality. </div>
 
-However, it may have fewer specialized time series functions than specialized Python libraries. 
-  </div>
+However, it may have fewer specialized time series functions than specialized Python libraries.   
 
 ### Workaround 
 For example, PySpark's regression models like random forest and gradient-boosted trees are not specialized for time series forecasting, you can engineer features that capture time series characteristics (like lag features, rolling windows, etc.) and use them in these models. 
