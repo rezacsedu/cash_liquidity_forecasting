@@ -148,6 +148,73 @@ def standalone_liquidity_forecasting(model, forecast_horizon):
   upper_quantile = forecast.quantile_timeseries(0.95)
   return forecast, lower_quantile, upper_quantile  
 
+model, train_series = standalone_model_training_for_liquidity_forecasting(cash_flow_df)
+
+forecast_horizon = 30
+forecast, lower_quantile, upper_quantile = standalone_liquidity_forecasting(model, forecast_horizon)
+# Sum all net_cash_flow columns for each date
+forecast_pdf = forecast.pd_dataframe()
+     
+forecast_pdf['forecasted_net_cash_flow'] = forecast_pdf.filter(regex='^net_cash_flow_s').mean(axis=1)
+forecast_pdf['date'] = forecast_pdf.index
+forecast_pdf = forecast_pdf.reset_index(drop=True)
+forecast_pdf = forecast_pdf[['date', 'forecasted_net_cash_flow']]    
+```
+<img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/sample_forecast_pdf.png" width="900" height="400">
+
+### Distributed cash liquidity forecasting with PySpark
+```
+  %%time
+  from pyspark.sql import SparkSession
+  from pyspark.sql.functions import pandas_udf, PandasUDFType
+  from pyspark.sql.types import *
+  from pyspark.sql.functions import pandas_udf
+  from pyspark.sql.types import StructType, StructField, TimestampType, IntegerType, DoubleType
+  
+  import pandas as pd
+  from darts import TimeSeries
+  from darts.models import Prophet
+  
+  # Initialize a Spark session
+  spark = SparkSession.builder.appName("LiquidityForecasting").getOrCreate()
+  
+  schema = StructType([
+  StructField('date', TimestampType(), True),
+  StructField('forecast_net_cash_flow', DoubleType(), True)
+  ])
+  
+  # Define the pandas_udf function
+  @pandas_udf(schema, PandasUDFType.GROUPED_MAP)
+  def forecast_timeseries(df):
+    # Convert the data into a Darts TimeSeries object
+    train_series = TimeSeries.from_dataframe(df, time_col='date', value_cols='net_cash_flow', fill_missing_dates=True, freq='M')
+  
+    # Create and fit the Prophet model
+    model = Prophet(seasonality_mode='multiplicative', yearly_seasonality=4)
+    model.fit(train_series)
+  
+    # Forecast the future liquidity
+    forecast_horizon = 30  # Adjust the forecast horizon as needed
+    forecast = model.predict(n=forecast_horizon)
+  
+    # Prepare the forecast DataFrame to match the specified schema
+    forecast_df = forecast.pd_dataframe()
+    forecast_df.reset_index(inplace=True)
+    forecast_df.columns = ['date', 'forecast_net_cash_flow']
+    #forecast_df['total_mean_forecasted_net_cash_flow'] = forecast_df.filter(regex='^total_mean_forecasted_net_cash_flow_s').mean(axis=1)
+  
+    # Return the forecast as a Pandas DataFrame
+    return forecast_df
+  
+  # Assuming 'sdf' is a Spark DataFrame with 'date' and 'net_cash_flow' columns. Apply the pandas_udf function to the DataFrame
+  total_liquidity = cash_flow_df.groupby('date')['net_cash_flow'].sum().reset_index()
+  sdf = spark.createDataFrame(total_liquidity)
+  forecast_sdf = sdf.groupby().apply(forecast_timeseries)
+```
+<img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/sample_forecast_sdf.png" width="900" height="400">
+
+### Conformal prediciton interval for better uncertanity quantification
+```
 def plot_liquidity_forecast(series, forecast, lower_quantile, upper_quantile):
   # Plot the forecast alongside the actual data
   plt.figure(figsize=(13, 6))
@@ -204,72 +271,8 @@ def plot_liquidity_forecast(series, forecast, lower_quantile, upper_quantile):
 
   # Show the plot
   plt.tight_layout()
-  plt.show()     
+  plt.show()
 
-model, train_series = standalone_model_training_for_liquidity_forecasting(cash_flow_df)
-
-forecast_horizon = 30
-forecast, lower_quantile, upper_quantile = standalone_liquidity_forecasting(model, forecast_horizon)
-# Sum all net_cash_flow columns for each date
-forecast_pdf = forecast.pd_dataframe()
-     
-forecast_pdf['forecasted_net_cash_flow'] = forecast_pdf.filter(regex='^net_cash_flow_s').mean(axis=1)
-forecast_pdf['date'] = forecast_pdf.index
-forecast_pdf = forecast_pdf.reset_index(drop=True)
-forecast_pdf = forecast_pdf[['date', 'forecasted_net_cash_flow']]    
-
-plot_liquidity_forecast(train_series, forecast, lower_quantile, upper_quantile)     
-
+plot_liquidity_forecast(train_series, forecast, lower_quantile, upper_quantile)  
 ```
-
-### Distributed cash liquidity forecasting with PySpark
-
-```
-  %%time
-  from pyspark.sql import SparkSession
-  from pyspark.sql.functions import pandas_udf, PandasUDFType
-  from pyspark.sql.types import *
-  from pyspark.sql.functions import pandas_udf
-  from pyspark.sql.types import StructType, StructField, TimestampType, IntegerType, DoubleType
-  
-  import pandas as pd
-  from darts import TimeSeries
-  from darts.models import Prophet
-  
-  # Initialize a Spark session
-  spark = SparkSession.builder.appName("LiquidityForecasting").getOrCreate()
-  
-  schema = StructType([
-  StructField('date', TimestampType(), True),
-  StructField('forecast_net_cash_flow', DoubleType(), True)
-  ])
-  
-  # Define the pandas_udf function
-  @pandas_udf(schema, PandasUDFType.GROUPED_MAP)
-  def forecast_timeseries(df):
-    # Convert the data into a Darts TimeSeries object
-    train_series = TimeSeries.from_dataframe(df, time_col='date', value_cols='net_cash_flow', fill_missing_dates=True, freq='M')
-  
-    # Create and fit the Prophet model
-    model = Prophet(seasonality_mode='multiplicative', yearly_seasonality=4)
-    model.fit(train_series)
-  
-    # Forecast the future liquidity
-    forecast_horizon = 30  # Adjust the forecast horizon as needed
-    forecast = model.predict(n=forecast_horizon)
-  
-    # Prepare the forecast DataFrame to match the specified schema
-    forecast_df = forecast.pd_dataframe()
-    forecast_df.reset_index(inplace=True)
-    forecast_df.columns = ['date', 'forecast_net_cash_flow']
-    #forecast_df['total_mean_forecasted_net_cash_flow'] = forecast_df.filter(regex='^total_mean_forecasted_net_cash_flow_s').mean(axis=1)
-  
-    # Return the forecast as a Pandas DataFrame
-    return forecast_df
-  
-  # Assuming 'sdf' is a Spark DataFrame with 'date' and 'net_cash_flow' columns. Apply the pandas_udf function to the DataFrame
-  total_liquidity = cash_flow_df.groupby('date')['net_cash_flow'].sum().reset_index()
-  sdf = spark.createDataFrame(total_liquidity)
-  forecast_sdf = sdf.groupby().apply(forecast_timeseries)
-```
-### Conformal prediciton interval for better uncertanity quantification
+<img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/sample_forecast.png" width="900" height="400">
