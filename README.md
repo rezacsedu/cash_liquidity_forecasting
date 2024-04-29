@@ -21,12 +21,12 @@ These libraries are ranked based on their general popularity and suitability for
 When comparing standard Python libraries for time series forecasting with PySpark libraries, the key differences in scalability and computational bottlenecks are:
 
 ### Standard Python Libraries (e.g., pandas, statsmodels, scikit-learn):
-•  **Scalability**: These libraries are generally not designed for distributed computing. They work well for datasets that fit into the memory of a single machine. When dealing with very large datasets, you may encounter memory limitations and performance issues.
-•  **Computational Bottleneck**: The computational bottleneck for standard Python libraries typically arises when the dataset size exceeds the memory capacity of the machine, leading to slower performance and potential crashes.
+  •  **Scalability**: These libraries are generally not designed for distributed computing. They work well for datasets that fit into the memory of a single machine. When dealing with very large datasets, you may encounter memory limitations and performance issues.
+  •  **Computational Bottleneck**: The computational bottleneck for standard Python libraries typically arises when the dataset size exceeds the memory capacity of the machine, leading to slower performance and potential crashes.
 
 ### PySpark Libraries:
-• **Scalability**: PySpark is designed for distributed computing and can handle very large datasets by distributing the computation across multiple nodes in a cluster. This makes it highly scalable and suitable for big data applications.
-• **Computational Bottleneck**: The computational bottleneck in PySpark is less likely to be due to dataset size, as it can process data that exceeds the memory of a single machine. However, network I/O, data serialization, and the overhead of managing distributed computations can become bottlenecks, especially if not properly optimized.
+  • **Scalability**: PySpark is designed for distributed computing and can handle very large datasets by distributing the computation across multiple nodes in a cluster. This makes it highly scalable and suitable for big data applications.
+  • **Computational Bottleneck**: The computational bottleneck in PySpark is less likely to be due to dataset size, as it can process data that exceeds the memory of a single machine. However, network I/O, data serialization, and the overhead of managing distributed computations can become bottlenecks, especially if not properly optimized.
 
 In summary, for smaller datasets that can fit into the memory of a single machine, standard Python libraries are often sufficient and can be more straightforward to use. For larger datasets or when distributed computing is required, PySpark shines with its ability to scale and handle complex, large-scale data processing tasksh
 
