@@ -109,7 +109,6 @@ We generate synthetic time series data for 1000 accounts over a specified date t
 <img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/sample_data.png" width="900" height="400">
 
 ### Standalone forecasting using Prophet model from Darts library 
-
 ```
 %%time
 from darts import TimeSeries
@@ -160,7 +159,7 @@ forecast_pdf['date'] = forecast_pdf.index
 forecast_pdf = forecast_pdf.reset_index(drop=True)
 forecast_pdf = forecast_pdf[['date', 'forecasted_net_cash_flow']]    
 ```
-<img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/sample_forecast_pdf.png" width="900" height="400">
+<img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/sample_forecast_pdf.png" width="500" height="300">
 
 ### Distributed cash liquidity forecasting with PySpark
 ```
@@ -211,7 +210,7 @@ forecast_pdf = forecast_pdf[['date', 'forecasted_net_cash_flow']]
   sdf = spark.createDataFrame(total_liquidity)
   forecast_sdf = sdf.groupby().apply(forecast_timeseries)
 ```
-<img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/sample_forecast_sdf.png" width="900" height="400">
+<img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/sample_forecast_sdf.png" width="500" height="300">
 
 ### Conformal prediciton interval for better uncertanity quantification
 ```
