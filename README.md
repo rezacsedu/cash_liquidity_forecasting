@@ -50,6 +50,7 @@ The overhead of applying these depends on various factors, including the operati
 </div>
 
 ## Toy proof-of-concept 
+<div align="justify">
 We did some quick POC based on synthetic data to assess the technical feasibility. The overall workflow of the methods employed can be described as follows: 
 
   1. **Data generation:** Generating the data by incorporating real-life scenarios
@@ -58,6 +59,7 @@ We did some quick POC based on synthetic data to assess the technical feasibilit
   4. **Generating predictions on a calibration set and calculating the conformity scores**: The conformity score can be calculated w.r.t absolute error between the predicted and actual values.
   5. **Setting a significance level**: Set a confidence level, e.g., 0.05 for 95% confidence and use the conformity scores to determine the prediction intervals for new data points.
   6. **Predict future data points:** Predict future data points for a required forecast horizon using the trained model and calculate the upper and lower bounds of the prediction intervals based on the conformity scores and the significance level.
+</div>
 
 ### Data generation
 <div align="justify">
