@@ -1,35 +1,31 @@
 # Cash Liquidity Forecasting
-Suppose there are 100 bank accounts for a group of companies for their 100 business units. Now let's say from those accounts variable cash amounts (e.g., from stores to individual accounts) are deposited daily (cash inflow) into a central account and certain amounts will be transferred from those accounts to other accounts like paying salary for the employees (cash outflow) or service charges, etc. Also, since those 100 accounts might be within a single country or spread across countries, the central account will have all the liquid money in US Dollars. 
-
-How can we model this situation in the form of a cash or liquidity forecasting problem such that we can forecast how much liquid cash will still be in their individual or central account so that the organization can make intelligent decisions about investing the liquid money in profitable businesses? This is crucial because, otherwise that money will just be sitting idle. 
+Suppose there are 100 bank accounts for a group of companies for their 100 business units. Now let's say from those accounts variable cash amounts (e.g., from stores to individual accounts) are deposited daily (cash inflow) into a central account and certain amounts will be transferred from those accounts to other accounts like paying salary for the employees (cash outflow) or service charges, etc. Also, since those 100 accounts might be within a single country or spread across countries, the central account will have all the liquid money in US Dollars. How can we model this situation in the form of a cash or liquidity forecasting problem such that we can forecast how much liquid cash will still be in their individual or central account so that the organization can make intelligent decisions about investing the liquid money in profitable businesses? This is crucial because, otherwise that money will just be sitting idle. 
 
 ## Libraries 
-These libraries are ranked based on their general popularity and suitability for a range of time series forecasting tasks. The best choice for you will depend on your specific requirements, such as the complexity of the time series, the need for classical versus machine learning methods, and the level of customization required.
+These libraries are ranked based on their general popularity and suitability for a range of time series forecasting tasks. The best choice will depend on our specific requirements, such as the complexity of the time series, the need for classical versus machine learning methods, sclability, features, and the level of customization required.
 
-  - statsmodels: Known for its extensive list of algorithms for statistical modelling and time series analysis, statsmodels is a popular choice for those looking for classical statistical methods.
-  - scikit-learn: Again, not exclusively for time series, but its wide range of algorithms and tools for machine learning make it a versatile library that can be adapted for time series forecasting.
-  - Prophet: Developed by Facebook, Prophet is designed for forecasting time series data. It's especially good for data with strong seasonal effects and several seasons of historical data.
-  - Darts: Darts is a Python library developed by Unit8 for easy manipulation and forecasting of time series. It provides a variety of models, from classical to deep learning.
-  - Kats: Developed by Facebook, Kats is a toolkit designed specifically for time series analysis. It offers a variety of models and utilities, making it a flexible choice for time series tasks.
-  - GreyKite: A newer library released by LinkedIn, GreyKite offers automation in forecasting tasks using the primary forecasting algorithm ‘Silverkite.’ It's designed to simplify prediction tasks and help interpret outputs.
-  - AutoTS: AutoTS is a library that provides automated time series forecasting. It's designed to be easy to use and to handle a wide range of time series forecasting problems.
-  - ARIMA: While ARIMA is a model rather than a library, it's implemented in several Python packages like statsmodels. It's one of the most traditional and widely used methods for time series forecasting.
-  - PyFlux: PyFlux offers a wide range of time series models, including Bayesian models, ARIMA, and GARCH. It's a good choice for those looking for advanced probabilistic modelling.
-  - Tsfresh: Tsfresh is focused on feature extraction for time series data. It's useful for preparing time series data for machine learning models.
-  - Sktime: Sktime provides a unified framework for time series machine learning.
+  - **statsmodels**: Known for its extensive list of algorithms for statistical modelling and time series analysis, statsmodels is a popular choice for those looking for classical statistical methods.
+  - **scikit-learn**: Again, not exclusively for time series, but its wide range of algorithms and tools for machine learning make it a versatile library that can be adapted for time series forecasting.
+  - **Skforecast**: Skforest is a Python library that eases using scikit-learn regressors as single and multi-step forecasters. It also works with any regressor compatible with the scikit-learn API (LightGBM, XGBoost, CatBoost, ...)
+  - **Prophet**: Developed by Facebook, Prophet is designed for forecasting time series data. It's especially good for data with strong seasonal effects and several seasons of historical data.
+  - **Darts**: Darts is a Python library developed by Unit8 for easy manipulation and forecasting of time series. It provides a variety of models, from classical to deep learning.
+  - **Kats**: Developed by Facebook, Kats is a toolkit designed specifically for time series analysis. It offers a variety of models and utilities, making it a flexible choice for time series tasks.
+  - **GreyKite**: A newer library released by LinkedIn, GreyKite offers automation in forecasting tasks using the primary forecasting algorithm ‘Silverkite.’ It's designed to simplify prediction tasks and help interpret outputs.
+  - **AutoTS**: AutoTS is a library that provides automated time series forecasting. It's designed to be easy to use and to handle a wide range of time series forecasting problems.
+  - **ARIMA**: While ARIMA is a model rather than a library, it's implemented in several Python packages like statsmodels. It's one of the most traditional and widely used methods for time series forecasting.
+  - **PyFlux**: PyFlux offers a wide range of time series models, including Bayesian models, ARIMA, and GARCH. It's a good choice for those looking for advanced probabilistic modelling.
+  - **Tsfresh**: Tsfresh is focused on feature extraction for time series data. It's useful for preparing time series data for machine learning models.
+  - **Sktime**: Sktime provides a unified framework for time series machine learning.
 
 ## Standard time series libraries vs. PySpark ones
 When comparing standard Python libraries for time series forecasting with PySpark libraries, the key differences in scalability and computational bottlenecks are:
 
-Standard Python Libraries (e.g., pandas, statsmodels, scikit-learn):
-•  Scalability: These libraries are generally not designed for distributed computing. They work well for datasets that fit into the memory of a single machine. When dealing with very large datasets, you may encounter memory limitations and performance issues.
-
-•  Computational Bottleneck: The computational bottleneck for standard Python libraries typically arises when the dataset size exceeds the memory capacity of the machine, leading to slower performance and potential crashes.
-
-PySpark Libraries:
-•  Scalability: PySpark is designed for distributed computing and can handle very large datasets by distributing the computation across multiple nodes in a cluster. This makes it highly scalable and suitable for big data applications.
-
-•  Computational Bottleneck: The computational bottleneck in PySpark is less likely to be due to dataset size, as it can process data that exceeds the memory of a single machine. However, network I/O, data serialization, and the overhead of managing distributed computations can become bottlenecks, especially if not properly optimized.
+### Standard Python Libraries (e.g., pandas, statsmodels, scikit-learn):
+•  **Scalability**: These libraries are generally not designed for distributed computing. They work well for datasets that fit into the memory of a single machine. When dealing with very large datasets, you may encounter memory limitations and performance issues.
+•  **Computational Bottleneck**: The computational bottleneck for standard Python libraries typically arises when the dataset size exceeds the memory capacity of the machine, leading to slower performance and potential crashes.
+### PySpark Libraries:
+•  **Scalability**: PySpark is designed for distributed computing and can handle very large datasets by distributing the computation across multiple nodes in a cluster. This makes it highly scalable and suitable for big data applications.
+• ** Computational Bottleneck**: The computational bottleneck in PySpark is less likely to be due to dataset size, as it can process data that exceeds the memory of a single machine. However, network I/O, data serialization, and the overhead of managing distributed computations can become bottlenecks, especially if not properly optimized.
 
 In summary, for smaller datasets that can fit into the memory of a single machine, standard Python libraries are often sufficient and can be more straightforward to use. For larger datasets or when distributed computing is required, PySpark shines with its ability to scale and handle complex, large-scale data processing tasksh
 
