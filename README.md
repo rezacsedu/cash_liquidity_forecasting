@@ -45,7 +45,7 @@ We did some quick POC based on synthetic data to assess the technical feasibilit
   6. **Predict future data points:** Predict future data points for a required forecast horizon using the trained model and calculate the upper and lower bounds of the prediction intervals based on the conformity scores and the significance level.
 
 ### Data generation
-Following code to generate synthetic data by including factors such as different types of cash inflows and outflows, seasonality, trends, and perhaps external economic indicators to comply with a real-world scenario. It creates a time series dataset for 1000 accounts over a specified date range with monthly frequency. The dataset includes simulated cash inflows and outflows with seasonal patterns and adjusts for inflation factors.
+We generate synthetic time series data for 1000 accounts over a specified date that ranges with monthly frequency. The dataset includes simulated cash inflows and outflows with seasonal patterns, seasonality, and external economic indicators such as adjusted inflation factors to comply with a real-world scenario.
 
 ```
   # Set the random seed for reproducibility
