@@ -23,7 +23,7 @@ When comparing standard Python libraries for time series forecasting with PySpar
 ### Standard Python libraries
 Standard Python Libraries for Time Series Forecasting - libraries like Prophet, ARIMA, and statsmodels are widely used for time series forecasting. They are user-friendly and have a rich set of features for model development, diagnostics, validation, and even for back-testing functions. However, they are primarily designed for single-machine use and can face significant slowdowns or memory issues when dealing with very large datasets. Further, the computational bottleneck may often arises due to the libraries not being inherently distributed, meaning they don't parallelize computations without additional frameworks: 
 
-  •  **Scalability**: These libraries are generally not designed for distributed computing. They work well for datasets that fit into the memory of a single machine. When dealing with very large datasets, you may encounter memory limitations and performance issues.
+  •  **Scalability**: These libraries are generally not designed for distributed computing. They work well for datasets that fit into the memory of a single machine. When dealing with very large datasets, you may encounter memory limitations and performance issues. 
   •  **Computational Bottleneck**: The computational bottleneck for standard Python libraries typically arises when the dataset size exceeds the memory capacity of the machine, leading to slower performance and potential crashes.
 
 ### PySpark libraries
