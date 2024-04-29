@@ -210,7 +210,7 @@ forecast_pdf = forecast_pdf[['date', 'forecasted_net_cash_flow']]
   sdf = spark.createDataFrame(total_liquidity)
   forecast_sdf = sdf.groupby().apply(forecast_timeseries)
 ```
-<img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/sample_forecast_sdf.png" width="400" height="300">
+<img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/sample_forecast_sdf.png" width="250" height="300">
 
 ### Conformal prediciton interval for better uncertanity quantification
 ```
@@ -275,3 +275,7 @@ def plot_liquidity_forecast(series, forecast, lower_quantile, upper_quantile):
 plot_liquidity_forecast(train_series, forecast, lower_quantile, upper_quantile)  
 ```
 <img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/sample_forecast.png" width="900" height="400">
+
+  - **Cut-off**: This is a point in time at which the data is divided into two parts: the historical data used for training the model, and the future period for which predictions are made. The cut-off date is crucial because it determines the dataset that will be used to train the forecasting model.  
+  - **Period Focus**: As previously mentioned, this refers to the granularity of the forecast, such as hourly, daily, or monthly forecasts. It's about choosing the right time interval that aligns with the specific needs of the forecast.
+
