@@ -34,6 +34,16 @@ PySpark for Time Series Forecasting: being designed for distributed computing, P
 
 In summary, for smaller datasets that can fit into the memory of a single machine, standard Python libraries are often sufficient and can be more straightforward to use. For larger datasets or when distributed computing is required, PySpark shines with its ability to scale and handle complex, large-scale data processing tasks. For small to medium-sized datasets, standard Python libraries may be sufficient and easier to use due to their specialized time series functions. However, for large-scale data that requires distributed computing to manage computational bottlenecks, PySpark is the more suitable choice due to its scalability and efficient handling of big data. It's important to note that using PySpark effectively may require a more complex setup and understanding of distributed systems. 
 
+## Methods 
+To assess the technical feasibility, hereby we did some quick POC based on synthetatic data. The overall workflow of the methods employed vcan be described as follows: 
+
+  1. **Data generation:** Generating the data by incorporating real-life scenarios
+  2. **Splitting data into a training- and a calibration set**: The calibration set is used to determine the conformity scores which are essential for conformal prediction.
+  3. **Model training**: train the model on the train set by taking into consideration factors like seasonality if needed.
+  4. **Generating predictions on a calibration set and calculating the conformity scores**: The conformity score can be calculated w.r.t absolute error between the predicted and actual values.
+  5. **Setting a significance level**: Set a confidence level, e.g., 0.05 for 95% confidence and use the conformity scores to determine the prediction intervals for new data points.
+  6. **Predict future data points:** Predict future data points for a required forecast horizon using the trained model and calculate the upper and lower bounds of the prediction intervals based on the conformity scores and the significance level.
+
 ## Data generation
 Following code to generate synthetic data, by including factors such as different types of cash inflows and outflows, seasonality, trends, and perhaps external economic indicators to comply with a real-world scenario. It creates a time series dataset for 1000 accounts over a specified date range with monthly frequency. The dataset includes simulated cash inflows and outflows with seasonal patterns and adjusts for inflation factors.
 
@@ -77,20 +87,6 @@ Following code to generate synthetic data, by including factors such as differen
   # Reset the index to turn the MultiIndex into columns
   df.reset_index(inplace=True)
 ```
-
-## Methods 
-To introduce conformal prediction into your time series forecasting following steps are needed:
-
-  1. **Splitting data into a training- and a calibration set**: The calibration set is used to determine the conformity scores which are essential for conformal prediction.
-  
-  2. **Model training**: train the model on the train set by taking into consideration factors like seasonality if needed. 
-  
-  3. **Generating predictions on a calibration set and calculating the conformity scores**: The conformity score can be calculated w.r.t absolute error between the predicted and actual values.
-  
-  4. **Setting a significance level**: Set a confidence level, e.g., 0.05 for 95% confidence and use the conformity scores to determine the prediction intervals for new data points.
-  
-  5. **Predict future data points:** Predict future data points for a required forecast horizon using the trained model and calculate the upper and lower bounds of the prediction intervals based on the conformity scores and the significance level. 
-
 ### Standalone forecasting using Prophet model from Darts library 
 ### Distributed cash liquidity forecasting with PySpark
 ### Conformal prediciton interval for better uncertanity quantification
