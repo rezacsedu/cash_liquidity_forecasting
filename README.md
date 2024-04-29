@@ -20,13 +20,15 @@ These Python libraries are naturally specialised, well-maintained, and based on 
 Being designed for distributed computing, **PySpark** can handle large-scale data processing, allowing parallel processing across multiple nodes in a cluster. This significantly improves scalability and computational speed for large datasets. PySpark's MLlib library provides tools for ML and time series forecasting. The main advantage is its ability to scale horizontally by adding more nodes to the Spark cluster and its ability to handle complex, thus overcoming the computational bottlenecks faced by standard Python libraries. PySpark excels in scenarios where data parallelism can be leveraged, such as when you can partition your data and perform operations on each partition in parallel. Even, standard Python libraries can be used by leveraging its pandas_udf functionality. However, it has much fewer specialized time series functions than specialized Python libraries. 
 </div>
 
-## Recommendations and workaround? 
+## Workarounds to recommendations? 
 
 <div align="justify">
-For example, PySpark's regression models like random forest and gradient-boosted trees are not specialized for time series forecasting, you can engineer features that capture time series characteristics (like lag features, rolling windows, etc.) and use them in these models. 
+  
+### Forecasting PySpark's regression algorithms   
+PySpark's regression models such as random forest and gradient-boosted trees can be used for time series forecasting. However, they are really not specialized to do so. A workaround could be: i) either re-engineer features that capture time series characteristics, e.g. lag features, rolling windows, etc. and use them in these models, ii) implement an (or some) specialised algorithm (s) in PySpark like Prophet. 
 </div>
 
-#### Python UDF vs. pandas_udf (PySpark's UDFs)
+### Using pandas_udf (PySpark's UDFs)
 <div align="justify">
   
 There are several ways to scale things up as standard Python libraries are not meant with inherent PySpark support. Two options include **pandas_udf** and Python UDFs. Together with Apache Spark and Apache Arrow, **pandas_udfs** use the Pandas library for data manipulation to allow writing more performant UDFs than Python UDFs. They bring the power of Pandas and allow its capabilities to be used in PySpark code. 
