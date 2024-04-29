@@ -31,7 +31,7 @@ PySpark's regression models such as random forest and gradient-boosted trees can
 ### Forecasting at scale with PySpark's pandas_udf
 <div align="justify">
   
-There are several ways to scale things up as standard Python libraries are not meant with inherent PySpark support. Although PySpark has no specialized time series functions, standard Python libraries can be used for time series forecasting by leveraging *pandas_udf* and Python UDFs of PySpark. Together with Apache Spark and Apache Arrow, *pandas_udf* uses the Pandas library for data manipulation to allow writing more performant UDFs than Python UDFs. They bring the power of Pandas and allow its capabilities to be used in PySpark code. 
+Although standard time series forecasting libraries in Python do not have inherent PySpark support, there are several ways to scale things up. In particular, standard Python libraries can be used for time series forecasting by leveraging *pandas_udf* and Python UDFs of PySpark. Together with Apache Spark and Apache Arrow, *pandas_udf* uses the Pandas library for data manipulation to allow writing more performant UDFs than Python UDFs. They bring the power of Pandas and allow its capabilities to be used in PySpark code. 
   
 *pandas_udf* and *applyInPandas* are two powerful functions in PySpark for working with grouped data, but their performance and efficiency can vary greatly depending on the use case. However, pandas_udf is optimized for grouped operations and can leverage vectorized operations, making it faster than row-at-a-time UDFs: 
 
