@@ -3,7 +3,7 @@
 Suppose there are 100 bank accounts for a group of companies out of 100 business units and a central account. Now let's say those individual accounts that receive variable cash amounts daily (e.g., from stores or other businesses) will deposit the net cash (net cash inflow) into a central account (e.g., after paying out salaries for employees (cash outflow), service charges, and other depreciation costs). Also, since those 100 accounts might be within a country or spread across several countries, let's say the central account will have all the liquid money in US Dollars. How can we model this situation as a cash or liquidity forecasting problem such that we can forecast how much liquid cash will still be in their individual or central account so that the organization can make intelligent decisions about investing the liquid money in profitable businesses? This is crucial because, otherwise that money will just be sitting idle. 
   </div>
 
-## Standard Python libraries vs. PySpark for time series forecasting
+## Time series forecasting: standard Python libraries vs. PySpark
 <div align="justify">
   
 When comparing standard Python libraries for time series forecasting with PySpark, the key points of comparison are scalability and computational efficiency, especially with large datasets. The following are some most widely used **standard Python libraries** for time series forecasting tasks:
@@ -20,7 +20,7 @@ These Python libraries are naturally specialised, well-maintained, and based on 
 Being designed for distributed computing, **PySpark** can handle large-scale data processing, allowing parallel processing across multiple nodes in a cluster. This significantly improves scalability and computational speed for large datasets. PySpark's MLlib library provides tools for ML and time series forecasting. The main advantage is its ability to scale horizontally by adding more nodes to the Spark cluster and its ability to handle complex, thus overcoming the computational bottlenecks faced by standard Python libraries. PySpark excels in scenarios where data parallelism can be leveraged, such as when you can partition your data and perform operations on each partition in parallel. Even, standard Python libraries can be used by leveraging its pandas_udf functionality. However, it has much fewer specialized time series functions than specialized Python libraries. 
 </div>
 
-## Recommendations and Workaround? 
+## Recommendations and workaround? 
 
 <div align="justify">
 For example, PySpark's regression models like random forest and gradient-boosted trees are not specialized for time series forecasting, you can engineer features that capture time series characteristics (like lag features, rolling windows, etc.) and use them in these models. 
