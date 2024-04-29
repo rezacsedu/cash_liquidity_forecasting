@@ -34,7 +34,7 @@ There are several ways to scale things up as standard Python libraries are not m
 
 A sample aggregation operation on 1M rows took 50–55 seconds with Python UDF, whereas pandas_udfs took 40–45 seconds. This is a 25% performance improvement in local mode. Conversely, I noticed the advantage diminishes with smaller data, yet it is a good advantage indicator of using **pandas_udfs** compared to Python UDFs in PySpark. 
 
-**Warning**: both applyInPandas and grouped map pandas_udf may lead to **OOM** errors if the data within a group is too large.  
+**Warning**: both applyInPandas and grouped map pandas_udf may lead to **OOM** if the data within a group is too large.  
 
 ## Toy proof-of-concept 
 We did some quick POC based on synthetic data to assess the technical feasibility. The overall workflow of the methods employed can be described as follows: 
