@@ -2,6 +2,10 @@
 Suppose there are 100 bank accounts for a group of companies for their 100 business units. Now let's say from those accounts variable cash amounts (e.g., from stores to individual accounts) are deposited daily (cash inflow) into a central account and certain amounts will be transferred from those accounts to other accounts like paying salary for the employees (cash outflow) or service charges, etc. Also, since those 100 accounts might be within a single country or spread across countries, the central account will have all the liquid money in US Dollars. How can we model this situation in the form of a cash or liquidity forecasting problem such that we can forecast how much liquid cash will still be in their individual or central account so that the organization can make intelligent decisions about investing the liquid money in profitable businesses? This is crucial because, otherwise that money will just be sitting idle. 
 
 ## Libraries 
+When comparing standard Python libraries for time series forecasting with PySpark, the key points of comparison are scalability and computational efficiency, especially with large datasets. Here's a comparative analysis based on these criteria:
+
+Standard Python Libraries for Time Series Forecasting - libraries like Prophet, ARIMA, and statsmodels are widely used for time series forecasting. They are user-friendly and have a rich set of features for model development, diagnostics, validation, and even for back-testing functions. However, they are primarily designed for single-machine use and can face significant slowdowns or memory issues when dealing with very large datasets. Further, the computational bottleneck may often arises due to the libraries not being inherently distributed, meaning they don't parallelize computations without additional frameworks. 
+
 These libraries are ranked based on their general popularity and suitability for a range of time series forecasting tasks. The best choice will depend on our specific requirements, such as the complexity of the time series, the need for classical versus machine learning methods, sclability, features, and the level of customization required.
 
   - **statsmodels**: Known for its extensive list of algorithms for statistical modelling and time series analysis, statsmodels is a popular choice for those looking for classical statistical methods.
@@ -16,6 +20,10 @@ These libraries are ranked based on their general popularity and suitability for
   - **PyFlux**: PyFlux offers a wide range of time series models, including Bayesian models, ARIMA, and GARCH. It's a good choice for those looking for advanced probabilistic modelling.
   - **Tsfresh**: Tsfresh is focused on feature extraction for time series data. It's useful for preparing time series data for machine learning models.
   - **Sktime**: Sktime provides a unified framework for time series machine learning.
+
+PySpark for Time Series Forecasting: being designed for distributed computing, PySPark can handle large-scale data processing. It allows for parallel processing across multiple nodes in a cluster, which significantly improves scalability and computational speed for large datasets. PySpark's MLlib library provides tools for machine learning and time series forecasting. The main advantage is its ability to scale horizontally by adding more nodes to the Spark cluster, thus overcoming the computational bottlenecks faced by standard Python libraries. However, it may have fewer specialized time series functions compared to those specialized Python libraries. 
+
+In summary, for small to medium-sized datasets, standard Python libraries may be sufficient and easier to use due to their specialized time series functions. However, for large-scale data that requires distributed computing to manage computational bottlenecks, PySpark is the more suitable choice due to its scalability and efficient handling of big data. It's important to note that using PySpark effectively may require a more complex setup and understanding of distributed systems. 
 
 ## Standard time series libraries vs. PySpark ones
 When comparing standard Python libraries for time series forecasting with PySpark libraries, the key differences in scalability and computational bottlenecks are:
