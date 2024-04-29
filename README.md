@@ -4,8 +4,6 @@ Suppose there are 100 bank accounts for a group of companies for their 100 busin
 ## Libraries 
 These libraries are ranked based on their general popularity and suitability for a range of time series forecasting tasks. The best choice will depend on our specific requirements, such as the complexity of the time series, the need for classical versus machine learning methods, sclability, features, and the level of customization required.
 
-  - **statsmodels**: Known for its extensive list of algorithms for statistical modelling and time series analysis, statsmodels is a popular choice for those looking for classical statistical methods.
-  - **scikit-learn**: Again, not exclusively for time series, but its wide range of algorithms and tools for machine learning make it a versatile library that can be adapted for time series forecasting.
   - **Skforecast**: Skforest is a Python library that eases using scikit-learn regressors as single and multi-step forecasters. It also works with any regressor compatible with the scikit-learn API (LightGBM, XGBoost, CatBoost)
   - **Prophet**: Developed by Facebook, Prophet is designed for forecasting time series data. It's especially good for data with strong seasonal effects and several seasons of historical data.
   - **Darts**: Darts is a Python library developed by Unit8 for easy manipulation and forecasting of time series. It provides a variety of models, from classical to deep learning.
@@ -13,12 +11,26 @@ These libraries are ranked based on their general popularity and suitability for
   - **GreyKite**: A newer library released by LinkedIn, GreyKite offers automation in forecasting tasks using the primary forecasting algorithm ‘Silverkite.’ It's designed to simplify prediction tasks and help interpret outputs.
   - **AutoTS**: AutoTS is a library that provides automated time series forecasting. It's designed to be easy to use and to handle a wide range of time series forecasting problems.
   - **ARIMA**: While ARIMA is a model rather than a library, it's implemented in several Python packages like statsmodels. It's one of the most traditional and widely used methods for time series forecasting.
-  - **PyFlux**: PyFlux offers a wide range of time series models, including Bayesian models, ARIMA, and GARCH. It's a good choice for those looking for advanced probabilistic modelling.
+  - **PyFlux**: PyFlux offers a wide range of time series models, including Bayesian models, ARIMA, and GARCH. It's a good choice for those looking for advanced probabilistic forecasting.
   - **Tsfresh**: Tsfresh is focused on feature extraction for time series data. It's useful for preparing time series data for machine learning models.
   - **Sktime**: Sktime provides a unified framework for time series machine learning.
 
 ## Standard time series libraries vs. PySpark ones
-When comparing standard Python libraries for time series forecasting with PySpark, the key points of comparison are scalability and computational efficiency, especially with large datasets. Here's a comparative analysis based on these criteria:
+When comparing standard Python libraries for time series forecasting with PySpark, the key points of comparison are scalability and computational efficiency, especially with large datasets. Here's a comparative analysis based on these criteria. When deciding whether to use PySpark for building your time series forecasting model, consider the following factors:
+
+•  **Scalability**: If your dataset is large and expected to grow, PySpark can handle the scale efficiently due to its distributed computing capabilities. Standard Python libraries may struggle with scalability and lead to computational bottlenecks.
+
+•  **Data Parallelism**: PySpark excels in scenarios where data parallelism can be leveraged, such as when you can partition your data and perform operations on each partition in parallel.
+
+•  **Specialized Time Series Features:** While it's true that PySpark's regression models like random forest and gradient boosted trees are not specialized for time series forecasting, you can engineer features that capture time series characteristics (like lag features, rolling windows, etc.) and use them in these models.
+
+•  **Integration with Other Systems**: If your workflow involves other big data tools or you need to integrate with a data ecosystem that already uses Spark, PySpark would be a natural fit.
+
+•  **Resource Management**: PySpark provides better resource management for large-scale data processing compared to standard Python libraries, which can be crucial for time series forecasting models that may require significant computational resources.
+
+If your use case does not involve massive datasets or the need for distributed computing, and if you require specialized time series models (like ARIMA, SARIMA, Prophet, etc.), you might be better served by Python libraries like statsmodels, scikit-learn, or fbprophet that offer more specialized time series forecasting capabilities.
+
+In summary, if scalability and integration with a big data ecosystem are important for your project, and you are comfortable with feature engineering to incorporate time series aspects, PySpark could be a good choice. Otherwise, for smaller datasets or when specialized time series analysis is required, standard Python libraries might be more appropriate. 
 
 ### Standard Python libraries
 Standard Python Libraries for Time Series Forecasting - libraries like Prophet, ARIMA, and statsmodels are widely used for time series forecasting. They are user-friendly and have a rich set of features for model development, diagnostics, validation, and even for back-testing functions. However, they are primarily designed for single-machine use and can face significant slowdowns or memory issues when dealing with very large datasets. Further, the computational bottleneck may often arises due to the libraries not being inherently distributed, meaning they don't parallelize computations without additional frameworks: 
