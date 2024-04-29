@@ -106,6 +106,8 @@ We generate synthetic time series data for 1000 accounts over a specified date t
   # Reset the index to turn the MultiIndex into columns
   df.reset_index(inplace=True)
 ```
+<img src="https://github.com/rezacsedu/cash_liquidity_forecasting/main/images/sample_data.png" width="700" height="650">
+
 ### Standalone forecasting using Prophet model from Darts library 
 
 ```
