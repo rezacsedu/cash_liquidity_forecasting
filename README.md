@@ -24,11 +24,11 @@ These Python libraries are naturally specialised, well-maintained, and based on 
 
 <div align="justify">
   
-### Forecasting PySpark's regression algorithms   
+### Forecasting with PySpark's regression algorithms   
 PySpark's regression models such as random forest and gradient-boosted trees can be used for time series forecasting. However, they are really not specialized to do so. A workaround could be: i) either re-engineer features that capture time series characteristics, e.g. [lag features, rolling windows](https://medium.com/analytics-vidhya/time-series-forecasting-using-spark-ml-part-2-31506514c643), etc. and use them in these models, ii) implement an (or some) specialised algorithm (s) in PySpark like Prophet. 
 </div>
 
-### Using pandas_udf (PySpark's UDFs)
+### Forecasting at scale with PySpark's pandas_udf
 <div align="justify">
   
 There are several ways to scale things up as standard Python libraries are not meant with inherent PySpark support. Two options include *pandas_udf* and Python UDFs. Together with Apache Spark and Apache Arrow, *pandas_udf* uses the Pandas library for data manipulation to allow writing more performant UDFs than Python UDFs. They bring the power of Pandas and allow its capabilities to be used in PySpark code. 
