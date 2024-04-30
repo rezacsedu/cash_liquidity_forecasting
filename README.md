@@ -54,7 +54,7 @@ Taking into consideration several features such as back-testing, probabilistic f
 
 </div>
 
-<img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/lib_recommendation.png" width="900" height="400">
+<img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/lib_recommendation.png" width="930" height="450">
 
 
 ## Toy proof-of-concept 
