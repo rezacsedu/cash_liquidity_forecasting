@@ -159,7 +159,7 @@ forecast_pdf = forecast_pdf[['date', 'forecasted_net_cash_flow']]
 ```
 <img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/sample_forecast_pdf.png" width="400" height="300">
 
-### Distributed cash liquidity forecasting with PySpark
+### Distributed cash liquidity forecasting with Darts library in PySpark
 ```
   %%time
   from pyspark.sql import SparkSession
@@ -209,6 +209,53 @@ forecast_pdf = forecast_pdf[['date', 'forecasted_net_cash_flow']]
   forecast_sdf = sdf.groupby().apply(forecast_timeseries)
 ```
 <img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/sample_forecast_sdf.png" width="250" height="350">
+
+### Distributed cash liquidity forecasting with AutoTS library in PySpark
+```
+  from autots import AutoTS
+  import pandas as pd
+  from pyspark.sql.functions import pandas_udf, PandasUDFType
+  from pyspark.sql.types import *
+  
+  df_spark = spark.createDataFrame(df1)
+  
+  schema = StructType([StructField('series_id', StringType(), True),
+                       StructField('datetime', DateType(), True),
+                       StructField('value', LongType(), True)])
+  
+  @pandas_udf(df_spark.schema, PandasUDFType.GROUPED_MAP)
+  
+  def forecast_func(df_long):
+    
+    try:
+      
+      model = AutoTS(
+        forecast_length=18,
+        frequency='MS',
+        model_list= "fast_parallel",
+          transformer_list='all',
+        ensemble='all',
+        validation_method="even",
+        max_generations=5,
+        num_validations=3,
+        no_negatives=True,
+        constraint=2.0)
+  
+      model = model.fit(df_long, date_col='datetime', value_col='value', id_col='series_id')
+  
+      prediction = model.predict()
+      forecasts_df = prediction.forecast
+      forecasts_df.reset_index(inplace = True)
+      forecasts_df.insert(2, "series_id", forecasts_df.columns.values[1])
+      forecasts_df.columns = ['datetime', 'value', 'series_id']
+  
+      return(forecasts_df)
+    except:
+      exp_df = pd.DataFrame(columns=['series_id','datetime','value'])
+      return(exp_df)
+  
+  out_df = df_spark.repartitionByRange(2000, 'series_id').groupby(['series_id']).apply(forecast_func)
+```
 
 ### Conformal prediciton interval for better uncertanity quantification
 ```
