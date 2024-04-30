@@ -43,7 +43,10 @@ Although standard time series forecasting libraries in Python do not have inhere
 
 So technically, these functions can be employed while performing time series forecasting using specialized tPython libraries but in PySpark. However, the overhead of applying these depends on various factors, including the operations' complexity and the data's size. A sample aggregation operation on 1M rows took 50–55 seconds with Python UDF, whereas pandas_udfs took 40–45 seconds. This is a 25% performance improvement in local mode. 
 
-Conversely, I noticed the advantage diminishes with smaller data, yet it is a good advantage indicator of using *pandas_udf* in PySpark compared to Python UDFs. **Warning**: both applyInPandas and grouped map pandas_udf may lead to **OOM** if the data within a group is too large.  
+Conversely, I noticed the advantage diminishes with smaller data, yet it is a good advantage indicator of using *pandas_udf* in PySpark compared to Python UDFs. 
+
+**Warning**: both applyInPandas and grouped map pandas_udf may lead to **OOM** if the data within a group is too large.  
+
 </div>
 
 ## Toy proof-of-concept 
