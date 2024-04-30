@@ -31,15 +31,13 @@ PySpark's regression models such as random forest and gradient-boosted trees can
 ### Forecasting at scale with PySpark's pandas_udf
 <div align="justify">
   
-Although standard time series forecasting libraries in Python do not have inherent PySpark support, there are several ways to scale things up. In particular, standard Python libraries can be used for time series forecasting by leveraging *pandas_udf* and Python UDFs of PySpark. Together with Apache Spark and Apache Arrow, *pandas_udf* uses the Pandas library for data manipulation to allow writing more performant UDFs than Python UDFs. They bring the power of Pandas and allow its capabilities to be used in PySpark code. 
-  
-*pandas_udf* and *applyInPandas* are two powerful functions in PySpark for working with grouped data, but their performance and efficiency can vary greatly depending on the use case. However, pandas_udf is optimized for grouped operations and can leverage vectorized operations, making it faster than row-at-a-time UDFs: 
+Although standard time series forecasting libraries in Python do not have inherent PySpark support, there are several ways to scale things up still. For example, standard Python libraries can be used for time series forecasting by leveraging *pandas_udf* of PySpark and Python UDFs. Together with Apache Spark and Apache Arrow, *pandas_udf* uses the Pandas library for data manipulation to allow writing more performant UDFs than Python UDFs. They bring the power of Pandas and allow its capabilities to be used in PySpark code. In particular, *pandas_udf* and *applyInPandas* are two functions in PySpark for working with grouped data, but their performance and efficiency can largely vary depending on the use case, e.g., pandas_udf is optimized for grouped operations and can leverage vectorized operations, making it faster than row-at-a-time UDFs: 
 
 - **Scalar pandas_udf**: operates element-wise
 - **Grouped map pandas_udf**: it is designed for more complex operations on grouped data.
 - **applyInPandas**: allows for arbitrary operations on grouped data and allows for more complex transformations. Hence, it can be more efficient for execution with large datasets. Although similar to the grouped map pandas_udf, its efficiency depends on the specific transformation and the context in which it's used.
 
-The overhead of applying these depends on various factors, including the operations' complexity and the data's size. A sample aggregation operation on 1M rows took 50–55 seconds with Python UDF, whereas pandas_udfs took 40–45 seconds. This is a 25% performance improvement in local mode. Conversely, I noticed the advantage diminishes with smaller data, yet it is a good advantage indicator of using *pandas_udf* compared to Python UDFs in PySpark. 
+The overhead of applying these depends on various factors, including the operations' complexity and the data's size. A sample aggregation operation on 1M rows took 50–55 seconds with Python UDF, whereas pandas_udfs took 40–45 seconds. This is a 25% performance improvement in local mode. Conversely, I noticed the advantage diminishes with smaller data, yet it is a good advantage indicator of using *pandas_udf* in PySpark compared to Python UDFs. 
 
 **Warning**: both applyInPandas and grouped map pandas_udf may lead to **OOM** if the data within a group is too large.  
 </div>
