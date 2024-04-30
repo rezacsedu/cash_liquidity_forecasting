@@ -21,7 +21,7 @@ These Python libraries are naturally specialised, well-maintained, and based on 
 </div>
 
 ## Workarounds to recommendations? 
-Hereby I provide my recommendations in 3-folds: i) using standard libraries in small data settings, ii) using regression algorithms from PySpark, and iii) forecasting at scale by using NY libraries by leveraging PySpark's pandas_udf. 
+I provide my recommendations in 3-folds: i) using standard libraries in small data settings, ii) using regression algorithms from PySpark, and iii) forecasting at scale with any libraries and by leveraging PySpark's pandas_udf. 
 
 <div align="justify">
 
