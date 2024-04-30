@@ -21,14 +21,14 @@ These Python libraries are naturally specialised, well-maintained, and based on 
 </div>
 
 ## Workarounds to recommendations? 
-Hereby I provide my recommendations in 3=folds: i) using standard libraries in small data settings, ii) using regression algorithms from PySpark, and iii) forecasting at scale by using NY libraries by leveraging PySpark's pandas_udf. 
+Hereby I provide my recommendations in 3-folds: i) using standard libraries in small data settings, ii) using regression algorithms from PySpark, and iii) forecasting at scale by using NY libraries by leveraging PySpark's pandas_udf. 
 
 <div align="justify">
 
-### Use standard libraries for time series forecasting in Python in small data setting
+### Forecasting with standard libraries in Python in small data settings
 For small to medium-sized datasets, standard Python libraries may be sufficient and easier to use due to their specialized time series functions. They're worth exploring and experimenting with because naturally specialised, well-maintained, and based on scientific studies. 
   
-### Using PySpark's regression algorithms   
+### Forecasting using PySpark's regression algorithms   
 PySpark's regression models such as random forest and gradient-boosted trees can be used for time series forecasting, albeit they are really not specialized to do so. A workaround could be: i) either compute or re-engineer features that capture time series characteristics, e.g. [lag features, rolling windows](https://medium.com/analytics-vidhya/time-series-forecasting-using-spark-ml-part-2-31506514c643) and use them in these models, ii) implement specialised algorithms in PySpark like Prophet. 
 </div>
 
