@@ -43,7 +43,13 @@ Although standard time series forecasting libraries in Python do not have inhere
 
 Even though these functions can be employed while performing time series forecasting with **any specialized Python libraries in PySpark** (see examples in Darts and AutoTS), the overhead of applying these depends on various factors, e.g., complexity and data size. A sample aggregation operation on 1M rows took 50–55 seconds with Python UDF, whereas pandas_udfs took 40–45 seconds. This is a 25% performance improvement in local mode. Conversely, I noticed the advantage diminishes with smaller data, yet it is a good advantage indicator of using *pandas_udf* in PySpark compared to Python UDFs. 
 
-**Warning**: both applyInPandas and grouped map pandas_udf may lead to **OOM** if the data within a group is too large.  
+</div>
+
+**Warnings**: 
+<div align="justify">
+  
+  - both applyInPandas and grouped map pandas_udf may lead to **OOM** if the data within a group is too large.
+  - both pandas_udf and applyInPandas in PySpark can potentially produce inconsistent results if not used carefully: i) **non-deterministic operations** -if the function applied is non-deterministic, results may vary between runs, ii) **order of execution** - in distributed setting the order in which data is processed may not be guaranteed, which can affect results in order-sensitive operations, iii) **data partitioning** - how data is partitioned across the cluster can influence the results, especially if the function assumes a certain data distribution or order. To ensure consistent results, it's important to write deterministic functions and check data partitioning, and sanity checking is crucial to confirm that the results are stable and reliable across different runs and cluster configurations.
 
 </div>
 
