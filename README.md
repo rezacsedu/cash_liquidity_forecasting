@@ -24,18 +24,18 @@ These Python libraries are naturally specialised, well-maintained, and based on 
 
 <div align="justify">
   
-### Forecasting with PySpark's regression algorithms   
+### Using PySpark's regression algorithms   
 PySpark's regression models such as random forest and gradient-boosted trees can be used for time series forecasting, albeit they are really not specialized to do so. A workaround could be: i) either compute or re-engineer features that capture time series characteristics, e.g. [lag features, rolling windows](https://medium.com/analytics-vidhya/time-series-forecasting-using-spark-ml-part-2-31506514c643) and use them in these models, ii) implement specialised algorithms in PySpark like Prophet. 
 </div>
 
 ### Forecasting at scale with PySpark's pandas_udf
 <div align="justify">
   
-Although standard time series forecasting libraries in Python do not have inherent PySpark support, there are several ways to scale things up still. For example, standard Python libraries can be used for time series forecasting by leveraging *pandas_udf* of PySpark and Python UDFs. Together with Apache Spark and Apache Arrow, *pandas_udf* uses the Pandas library for data manipulation to allow writing more performant UDFs than Python UDFs. They bring the power of Pandas and allow its capabilities to be used in PySpark code. In particular, *pandas_udf* and *applyInPandas* are two functions in PySpark for working with grouped data, but their performance and efficiency can largely vary depending on the use case, e.g., pandas_udf is optimized for grouped operations and can leverage vectorized operations, making it faster than row-at-a-time UDFs: 
+Although standard time series forecasting libraries in Python do not have inherent PySpark support, there are several ways to scale things up still. For example, standard Python libraries can be used for time series forecasting by leveraging *pandas_udf* of PySpark and Python UDFs. Like Apache Spark and Arrow, *pandas_udf* uses the Pandas library for data manipulation to allow writing more performant UDFs than Python UDFs. They bring the power of Pandas and allow its capabilities to be used in PySpark code. In particular, *pandas_udf* and *applyInPandas* can be used for working with grouped data in PySpark. However, their performance and efficiency can largely vary depending on the use case, e.g., pandas_udf is optimized for grouped operations and can leverage vectorized operations, making it faster than row-at-a-time UDFs: 
 
 - **Scalar pandas_udf**: operates element-wise
 - **Grouped map pandas_udf**: it is designed for more complex operations on grouped data.
-- **applyInPandas**: allows for arbitrary operations on grouped data and allows for more complex transformations. Hence, it can be more efficient for execution with large datasets. Although similar to the grouped map pandas_udf, its efficiency depends on the specific transformation and the context in which it's used.
+- **applyInPandas**: allows for arbitrary operations on grouped data and allows for more complex transformations. Hence, it can be more efficient for execution with large datasets. Although similar to grouped map pandas_udf, the efficiency of applyInPandas depends on the specific transformation and the context. 
 
 The overhead of applying these depends on various factors, including the operations' complexity and the data's size. A sample aggregation operation on 1M rows took 50–55 seconds with Python UDF, whereas pandas_udfs took 40–45 seconds. This is a 25% performance improvement in local mode. Conversely, I noticed the advantage diminishes with smaller data, yet it is a good advantage indicator of using *pandas_udf* in PySpark compared to Python UDFs. 
 
@@ -46,11 +46,11 @@ The overhead of applying these depends on various factors, including the operati
 <div align="justify">
 We did some quick POC based on synthetic data to assess the technical feasibility. The overall workflow of the methods employed can be described as follows: 
 
-  1. **Data generation:** Generating the data by incorporating real-life scenarios
+  1. **Data generation:** Generating the data by incorporating real-life scenarios.
   2. **Splitting data into a training- and a calibration set**: The calibration set is used to determine the conformity scores, which are essential for conformal prediction.
-  3. **Model training**: train the model on the train set by considering factors like seasonality if needed.
-  4. **Generating predictions on a calibration set and calculating the conformity scores**: The conformity score can be calculated w.r.t absolute error between the predicted and actual values.
-  5. **Setting a significance level**: Set a confidence level, e.g., 0.05 for 95% confidence and use the conformity scores to determine the prediction intervals for new data points.
+  3. **Model training**: train the model on the train set by considering factors like seasonality if needed. 
+  4. **Generating predictions on a calibration set and calculating the conformity scores**: The conformity score can be calculated w.r.t absolute error between the predicted and actual values. 
+  5. **Setting a significance level**: Set a confidence level, e.g., 0.05 for 95% confidence and use the conformity scores to determine the prediction intervals for new data points. 
   6. **Prediction:** Predict future data points for a given forecast horizon using the trained model and calculate the upper and lower bounds of the prediction intervals w.r.t conformity scores and the significance level.
 </div>
 
