@@ -47,6 +47,16 @@ Even though these functions can be employed while performing time series forecas
 
 </div>
 
+## Final verdict
+<div align="justify">
+  
+Taking into consideration several features such as back-testing, probabilistic forecasting, uni- and multivariate support, higher frequency (e.g., sub-daily) & longer duration (e.g., two full periods/years), support for seasonal effects or several seasons, specialised feature extraction, scalability, automatic model selection & hyperparameter tuning, explainability, and anomaly detection capability, we should go with forecasting at scale using Dart library in PySpark to achieve massive scalability and to avoid potential computational bottleneck. 
+
+</div>
+
+<img src="https://github.com/rezacsedu/cash_liquidity_forecasting/blob/main/images/lib_recommendation.png" width="900" height="400">
+
+
 ## Toy proof-of-concept 
 <div align="justify">
 We did some quick POC based on synthetic data to assess the technical feasibility. The overall workflow of the methods employed can be described as follows: 
