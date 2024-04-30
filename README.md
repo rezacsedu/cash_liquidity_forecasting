@@ -1,6 +1,6 @@
 # Cash Liquidity Forecasting
 <div align="justify">
-Suppose there are 100 bank accounts for a group of companies out of 100 business units and a central account. Now let's say those individual accounts that receive variable cash amounts daily (e.g., from stores or other businesses) will deposit the net cash (net cash inflow) into a central account (e.g., after paying out salaries for employees (cash outflow), service charges, and other depreciation costs). Also, since those 100 accounts might be within a country or spread across several countries, let's say the central account will have all the liquid money in US Dollars. How can we model this situation as a cash or liquidity forecasting problem such that we can forecast how much liquid cash will still be in their individual or central account so that the organization can make intelligent decisions about investing the liquid money in profitable businesses? This is crucial because, otherwise that money will just be sitting idle. 
+Suppose there are 100 bank accounts for a group of companies out of 100 business units and a central account. Now let's say those individual accounts that receive variable cash amounts daily (e.g., from stores or other businesses) will deposit the net cash (net cash inflow) into a central account (e.g., after paying out salaries for employees (cash outflow), service charges, and other depreciation costs). Also, since those 100 accounts might be within a country or spread across several countries, e.g., the central account will have all the liquid money in US Dollars. How can we model this situation as a cash or liquidity forecasting problem such that we can forecast how much liquid cash will still be in their individual or central account so that the organization can make intelligent decisions about investing the liquid money in profitable businesses? This is crucial because, otherwise that money will just be sitting idle. 
   </div>
 
 ## Time series forecasting: standard Python libraries vs. PySpark
@@ -26,10 +26,10 @@ I provide my recommendations in 3-folds: i) using standard libraries in small da
 <div align="justify">
 
 ### Forecasting with standard libraries in Python in small data settings
-For small to medium-sized datasets, standard Python libraries may be sufficient and easier to use due to their specialized time series functions. They're worth exploring and experimenting with because naturally specialised, well-maintained, and based on scientific studies. 
+For small to medium-sized datasets, standard Python libraries may be sufficient and easier to use due to their specialized time series functions. They're worth exploring and experimenting with because specialised, well-maintained, and based on scientific studies. 
   
 ### Forecasting using PySpark's regression algorithms   
-PySpark's regression models such as random forest and gradient-boosted trees can be used for time series forecasting, albeit they are really not specialized to do so. A workaround could be: i) either compute or re-engineer features that capture time series characteristics, e.g. [lag features, rolling windows](https://medium.com/analytics-vidhya/time-series-forecasting-using-spark-ml-part-2-31506514c643) and use them in these models, ii) implement specialised algorithms in PySpark like Prophet. 
+PySpark's regression models such as random forest and gradient-boosted trees can be used for time series forecasting, albeit they are not the best option. A workaround could be: i) either compute or re-engineer features that capture time series characteristics, e.g. [lag features, rolling windows](https://medium.com/analytics-vidhya/time-series-forecasting-using-spark-ml-part-2-31506514c643) and use them in these models, ii) implement specialised algorithms in PySpark like Prophet. 
 </div>
 
 ### Forecasting at scale with PySpark's pandas_udf
@@ -64,7 +64,7 @@ We did some quick POC based on synthetic data to assess the technical feasibilit
   1. **Data generation:** Generating the data by incorporating real-life scenarios.
   2. **Splitting data into a training- and a calibration set**: The calibration set is used to determine the conformity scores, which are essential for conformal prediction.
   3. **Model training**: train the model on the train set by considering factors like seasonality if needed. 
-  4. **Generating predictions on a calibration set and calculating the conformity scores**: The conformity score can be calculated w.r.t absolute error between the predicted and actual values. 
+  4. **Generating predictions on a calibration set and calculating the conformity scores**: The conformity score is calculated w.r.t absolute error between the predicted and actual values. 
   5. **Setting a significance level**: Set a confidence level, e.g., 0.05 for 95% confidence and use the conformity scores to determine the prediction intervals for new data points. 
   6. **Prediction:** Predict future data points for a given forecast horizon using the trained model and calculate the upper and lower bounds of the prediction intervals w.r.t conformity scores and the significance level.
 </div>
@@ -227,42 +227,33 @@ forecast_pdf = forecast_pdf[['date', 'forecasted_net_cash_flow']]
   from pyspark.sql.functions import pandas_udf, PandasUDFType
   from pyspark.sql.types import *
   
-  df_spark = spark.createDataFrame(df1)
-  
+  df_spark = spark.createDataFrame(df1)  
   schema = StructType([StructField('series_id', StringType(), True),
                        StructField('datetime', DateType(), True),
                        StructField('value', LongType(), True)])
   
-  @pandas_udf(df_spark.schema, PandasUDFType.GROUPED_MAP)
-  
-  def forecast_func(df_long):
-    
-    try:
-      
-      model = AutoTS(
-        forecast_length=18,
-        frequency='MS',
-        model_list= "fast_parallel",
-          transformer_list='all',
-        ensemble='all',
-        validation_method="even",
-        max_generations=5,
-        num_validations=3,
-        no_negatives=True,
-        constraint=2.0)
-  
-      model = model.fit(df_long, date_col='datetime', value_col='value', id_col='series_id')
-  
-      prediction = model.predict()
-      forecasts_df = prediction.forecast
-      forecasts_df.reset_index(inplace = True)
-      forecasts_df.insert(2, "series_id", forecasts_df.columns.values[1])
-      forecasts_df.columns = ['datetime', 'value', 'series_id']
-  
-      return(forecasts_df)
-    except:
-      exp_df = pd.DataFrame(columns=['series_id','datetime','value'])
-      return(exp_df)
+  @pandas_udf(df_spark.schema, PandasUDFType.GROUPED_MAP)  
+  def forecast_func(df_long):      
+    model = AutoTS(
+      forecast_length=18,
+      frequency='MS',
+      model_list= "fast_parallel",
+        transformer_list='all',
+      ensemble='all',
+      validation_method="even",
+      max_generations=5,
+      num_validations=3,
+      no_negatives=True,
+      constraint=2.0)
+
+    model = model.fit(df_long, date_col='datetime', value_col='value', id_col='series_id')
+    prediction = model.predict()
+    forecasts_df = prediction.forecast
+    forecasts_df.reset_index(inplace = True)
+    forecasts_df.insert(2, "series_id", forecasts_df.columns.values[1])
+    forecasts_df.columns = ['datetime', 'value', 'series_id']
+
+    return(forecasts_df)
   
   out_df = df_spark.repartitionByRange(2000, 'series_id').groupby(['series_id']).apply(forecast_func)
 ```
@@ -333,4 +324,3 @@ plot_liquidity_forecast(train_series, forecast, lower_quantile, upper_quantile)
 
   - **Cut-off**: This is a point in time at which the data is divided into two parts: the historical data used for training the model, and the future period for which predictions are made. The cut-off date is crucial because it determines the dataset that will be used to train the forecasting model.  
   - **Period Focus**: As previously mentioned, this refers to the granularity of the forecast, such as hourly, daily, or monthly forecasts. It's about choosing the right time interval that aligns with the specific needs of the forecast.
-
