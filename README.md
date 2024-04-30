@@ -43,9 +43,7 @@ More specifically, *pandas_udf* and *applyInPandas* are two powerful functions t
 - **Grouped map pandas_udf**: it is designed for more complex operations on grouped data.
 - **applyInPandas**: allows for arbitrary operations on grouped data and allows for more complex transformations. Hence, it can be more efficient for execution with large datasets. Although similar to grouped map pandas_udf, the efficiency of applyInPandas depends on the specific transformation and the context.
 
-So technically, these functions can be employed while performing time series forecasting with **any specialized Python libraries in PySpark** (see examples in Darts and AutoTS). 
-
-However, the overhead of applying these depends on various factors, including the operations' complexity and the data's size. A sample aggregation operation on 1M rows took 50–55 seconds with Python UDF, whereas pandas_udfs took 40–45 seconds. This is a 25% performance improvement in local mode. Conversely, I noticed the advantage diminishes with smaller data, yet it is a good advantage indicator of using *pandas_udf* in PySpark compared to Python UDFs. 
+Even though these functions can be employed while performing time series forecasting with **any specialized Python libraries in PySpark** (see examples in Darts and AutoTS), the overhead of applying these depends on various factors, e.g., complexity and data size. A sample aggregation operation on 1M rows took 50–55 seconds with Python UDF, whereas pandas_udfs took 40–45 seconds. This is a 25% performance improvement in local mode. Conversely, I noticed the advantage diminishes with smaller data, yet it is a good advantage indicator of using *pandas_udf* in PySpark compared to Python UDFs. 
 
 **Warning**: both applyInPandas and grouped map pandas_udf may lead to **OOM** if the data within a group is too large.  
 
