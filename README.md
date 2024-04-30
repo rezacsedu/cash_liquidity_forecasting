@@ -35,9 +35,7 @@ PySpark's regression models such as random forest and gradient-boosted trees can
 ### Forecasting at scale with PySpark's pandas_udf
 <div align="justify">
   
-Although standard time series forecasting libraries in Python do not have inherent PySpark support, there are several ways to scale things up still. For example, standard Python libraries can be used for time series forecasting by leveraging *pandas_udf* of PySpark and Python UDFs. Like Apache Spark and Arrow, *pandas_udf* uses Pandas for data manipulation to allow writing more performant UDFs than Python UDFs. They bring the power of Pandas, thereby allowing its capabilities to be used in PySpark code. 
-
-More specifically, *pandas_udf* and *applyInPandas* are two powerful functions that can be used for working with grouped data in PySpark. However, their performance and efficiency can largely vary depending on the use case, e.g., pandas_udf is optimized for grouped operations and can leverage vectorized operations, making it faster than row-at-a-time UDFs: 
+Although standard time series forecasting libraries in Python do not have inherent PySpark support, there are several ways to scale things up still. For example, standard Python libraries can be used for time series forecasting by leveraging *pandas_udf* of PySpark and Python UDFs. Like Apache Spark and Arrow, *pandas_udf* uses Pandas for data manipulation to allow writing more performant UDFs than Python UDFs. They bring the power of Pandas and allow its capabilities to be used in PySpark code. More specifically, *pandas_udf* and *applyInPandas* are two powerful functions that can be used for working with grouped data in PySpark. However, their performance and efficiency can largely vary depending on the use case, e.g., pandas_udf is optimized for grouped operations and can leverage vectorized operations, making it faster than row-at-a-time UDFs: 
 
 - **Scalar pandas_udf**: operates element-wise
 - **Grouped map pandas_udf**: it is designed for more complex operations on grouped data.
